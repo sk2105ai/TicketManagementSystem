@@ -1,0 +1,12 @@
+{
+  "Users": [
+    {
+      "Username": "sk3541",
+      "Email": "shahirkhan3541@gmail.com",
+      "PasswordHash": "e20AS\u002BdAkZ069GhzLm4FHmYlWmm0ahJNGAYfgvYehU0=",
+      "Salt": "ip4OXIiGEPFKbHKvtviGgw==",
+      "Role": 0,
+      "CreatedAt": "2025-05-12T15:38:50.1484298Z"
+    }
+  ]
+}

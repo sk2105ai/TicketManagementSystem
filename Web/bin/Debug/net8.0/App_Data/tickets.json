@@ -1,0 +1,12 @@
+{
+  "Tickets": [
+    {
+      "TicketId": "TKT-20250511-0001",
+      "Category": 1,
+      "OtherCategoryDetails": "",
+      "Description": "Color Change in Dashboard",
+      "Severity": 1,
+      "CreatedAt": "2025-05-11T23:01:21.084235-06:00"
+    }
+  ]
+}

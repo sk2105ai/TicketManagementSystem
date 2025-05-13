@@ -1,0 +1,42 @@
+﻿@model TicketMonitoringSystem.Models.Ticket
+
+@{
+    ViewData["Title"] = "Ticket Details";
+}
+
+<h1>Ticket Details</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.TicketId)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.TicketId)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Category)</dt>
+        <dd class="col-sm-9">
+            @Model.Category
+            @if (Model.Category == TicketMonitoringSystem.Models.TicketCategory.Others)
+            {
+                <small class="d-block text-muted">@Model.OtherCategoryDetails</small>
+            }
+        </dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Description)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Description)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Severity)</dt>
+        <dd class="col-sm-9">
+            <span class="badge @(Model.Severity == TicketMonitoringSystem.Models.TicketSeverity.Critical ? "bg-danger" :
+                             Model.Severity == TicketMonitoringSystem.Models.TicketSeverity.Major ? "bg-warning text-dark" :
+                             Model.Severity == TicketMonitoringSystem.Models.TicketSeverity.Minor ? "bg-info text-dark" : "bg-secondary")">
+                @Model.Severity
+            </span>
+        </dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.CreatedAt)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.CreatedAt)</dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.TicketId" class="btn btn-primary">Edit</a>
+    <a asp-action="Dashboard" class="btn btn-secondary">Back to Dashboard</a>
+</div>

@@ -1,0 +1,42 @@
+﻿@model TicketMonitoringSystem.Models.Ticket
+
+@{
+    ViewData["Title"] = "Delete Ticket";
+}
+
+<h1>Delete Ticket</h1>
+
+<div class="alert alert-danger">
+    <h3>Are you sure you want to delete this ticket?</h3>
+</div>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.TicketId)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.TicketId)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Category)</dt>
+        <dd class="col-sm-9">
+            @Model.Category
+            @if (Model.Category == TicketMonitoringSystem.Models.TicketCategory.Others)
+            {
+                <small class="d-block text-muted">@Model.OtherCategoryDetails</small>
+            }
+        </dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Description)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Description)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.Severity)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.Severity)</dd>
+
+        <dt class="col-sm-3">@Html.DisplayNameFor(model => model.CreatedAt)</dt>
+        <dd class="col-sm-9">@Html.DisplayFor(model => model.CreatedAt)</dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="TicketId" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Dashboard" class="btn btn-secondary">Back to Dashboard</a>
+    </form>
+</div>

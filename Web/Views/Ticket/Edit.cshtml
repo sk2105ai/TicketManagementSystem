@@ -1,0 +1,108 @@
+﻿@model TicketMonitoringSystem.Models.Ticket
+
+@{
+    ViewData["Title"] = "Edit Ticket";
+}
+
+<h1>Edit Ticket</h1>
+
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="TicketId" />
+            <input type="hidden" asp-for="CreatedAt" />
+
+            <div class="form-group">
+                <label asp-for="TicketId" class="control-label"></label>
+                <input asp-for="TicketId" class="form-control" disabled />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <select asp-for="Category" class="form-control" id="categorySelect">
+                    <option value="@TicketMonitoringSystem.Models.TicketCategory.Issue">Issue</option>
+                    <option value="@TicketMonitoringSystem.Models.TicketCategory.ServiceRequest">Service Request</option>
+                    <option value="@TicketMonitoringSystem.Models.TicketCategory.Others">Others</option>
+                </select>
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" id="otherCategoryDiv" style="display:none;">
+                <label asp-for="OtherCategoryDetails" class="control-label"></label>
+                <textarea asp-for="OtherCategoryDetails" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="OtherCategoryDetails" class="text-danger"></span>
+                <small class="form-text text-muted">Maximum 25 words allowed</small>
+                <div id="wordCount" class="text-muted"></div>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Severity" class="control-label"></label>
+                <select asp-for="Severity" class="form-control">
+                    <option value="@TicketMonitoringSystem.Models.TicketSeverity.Normal">Normal</option>
+                    <option value="@TicketMonitoringSystem.Models.TicketSeverity.Minor">Minor</option>
+                    <option value="@TicketMonitoringSystem.Models.TicketSeverity.Major">Major</option>
+                    <option value="@TicketMonitoringSystem.Models.TicketSeverity.Critical">Critical</option>
+                </select>
+                <span asp-validation-for="Severity" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="CreatedAt" class="control-label"></label>
+                <input asp-for="CreatedAt" class="form-control" disabled />
+            </div>
+
+            <div class="form-group mt-4">
+                <input type="submit" value="Save" class="btn btn-primary" />
+                <a asp-action="Dashboard" class="btn btn-secondary">Back to Dashboard</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function() {
+            // Handle category dropdown change
+            $('#categorySelect').change(function() {
+                if ($(this).val() == '@((int)TicketMonitoringSystem.Models.TicketCategory.Others)') {
+                    $('#otherCategoryDiv').show();
+                } else {
+                    $('#otherCategoryDiv').hide();
+                    $('#OtherCategoryDetails').val('');
+                }
+            });
+
+            // Word count functionality
+            $('#OtherCategoryDetails').on('input', function() {
+                let text = $(this).val().trim();
+                let wordCount = text ? text.split(/\s+/).length : 0;
+
+                $('#wordCount').text('Word count: ' + wordCount + '/25');
+
+                if (wordCount > 25) {
+                    $('#wordCount').addClass('text-danger');
+                } else {
+                    $('#wordCount').removeClass('text-danger');
+                }
+            });
+
+            // Initial state setup
+            if ($('#categorySelect').val() == '@((int)TicketMonitoringSystem.Models.TicketCategory.Others)') {
+                $('#otherCategoryDiv').show();
+                // Trigger word count calculation on load
+                $('#OtherCategoryDetails').trigger('input');
+            }
+        });
+    </script>
+}

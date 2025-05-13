@@ -1,0 +1,62 @@
+// wwwroot/css/site.css
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+    background-color: #f8f9fa;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}
+
+/* Ticket dashboard styling */
+.card {
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: 0.3s;
+    border-radius: 5px;
+}
+
+    .card:hover {
+        box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+
+/* Form styling */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+/* Table styling */
+.table-responsive {
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 5px;
+}
+
+.table th {
+    background-color: #343a40;
+    color: white;
+}
+
+/* Alert styling */
+.alert {
+    animation: fadeOut 5s forwards;
+    animation-delay: 3s;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+        display: none;
+    }
+}

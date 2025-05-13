@@ -1,0 +1,100 @@
+﻿@model IEnumerable<TicketMonitoringSystem.Models.Ticket>
+
+@{
+    ViewData["Title"] = "Ticket Dashboard";
+}
+
+<h1>Ticket Dashboard</h1>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary">
+            <div class="card-body">
+                <h5 class="card-title">Total Tickets</h5>
+                <h2 class="card-text">@Model.Count()</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-warning">
+            <div class="card-body">
+                <h5 class="card-title">Critical Tickets</h5>
+                <h2 class="card-text">@Model.Count(t => t.Severity == TicketMonitoringSystem.Models.TicketSeverity.Critical)</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info">
+            <div class="card-body">
+                <h5 class="card-title">Issues</h5>
+                <h2 class="card-text">@Model.Count(t => t.Category == TicketMonitoringSystem.Models.TicketCategory.Issue)</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-light">
+            <div class="card-body">
+                <h5 class="card-title">Service Requests</h5>
+                <h2 class="card-text">@Model.Count(t => t.Category == TicketMonitoringSystem.Models.TicketCategory.ServiceRequest)</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p>
+    <a asp-action="Create" class="btn btn-success">Create New Ticket</a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.TicketId)</th>
+                <th>@Html.DisplayNameFor(model => model.Category)</th>
+                <th>@Html.DisplayNameFor(model => model.Description)</th>
+                <th>@Html.DisplayNameFor(model => model.Severity)</th>
+                <th>@Html.DisplayNameFor(model => model.CreatedAt)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.TicketId)</td>
+                    <td>
+                        @item.Category
+                        @if (item.Category == TicketMonitoringSystem.Models.TicketCategory.Others)
+                        {
+                            <small class="d-block text-muted">@item.OtherCategoryDetails</small>
+                        }
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>
+                        <span class="badge @(item.Severity == TicketMonitoringSystem.Models.TicketSeverity.Critical ? "bg-danger" :
+                                         item.Severity == TicketMonitoringSystem.Models.TicketSeverity.Major ? "bg-warning text-dark" :
+                                         item.Severity == TicketMonitoringSystem.Models.TicketSeverity.Minor ? "bg-info text-dark" : "bg-secondary")">
+                            @item.Severity
+                        </span>
+                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                    <td>
+                        <div class="btn-group">
+                            <a asp-action="Edit" asp-route-id="@item.TicketId" class="btn btn-sm btn-primary">Edit</a>
+                            <a asp-action="Details" asp-route-id="@item.TicketId" class="btn btn-sm btn-info">Details</a>
+                            <a asp-action="Delete" asp-route-id="@item.TicketId" class="btn btn-sm btn-danger">Delete</a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
